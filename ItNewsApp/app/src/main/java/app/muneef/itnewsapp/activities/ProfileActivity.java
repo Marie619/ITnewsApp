@@ -13,6 +13,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -85,7 +86,9 @@ public class ProfileActivity extends AppCompatActivity {
                 txtUsername.setText(users.getUserName());
                 txtGenderValue.setText(users.getGender());
                 txtEmailValue.setText(users.getUserEmail());
-                imgProfile.setImageURI(Uri.parse(users.getProfileImageUrl()));
+
+                Glide.with(getApplicationContext()).load(users.getProfileImageUrl()).into(imgProfile);
+
 
             }
 
@@ -115,8 +118,8 @@ public class ProfileActivity extends AppCompatActivity {
                         @Override
                         public void onSuccess(Uri uri) {
                             String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
-//                        User Users = new User();
-//                        Users.setProfileImgUrl(uri.toString());
+                        Users users = new Users();
+                        users.setProfileImageUrl(uri.toString());
                             databaseReference.child(uid).child("profileImgUrl").setValue(uri.toString()).addOnSuccessListener(new OnSuccessListener<Void>() {
                                 @Override
                                 public void onSuccess(Void aVoid) {
