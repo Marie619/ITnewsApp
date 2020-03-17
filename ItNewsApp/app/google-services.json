@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "177276912949",
+    "firebase_url": "https://itnewsapp.firebaseio.com",
+    "project_id": "itnewsapp",
+    "storage_bucket": "itnewsapp.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:177276912949:android:6d4e7fbe92a7fee3d2787c",
+        "android_client_info": {
+          "package_name": "app.muneef.itnewsapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "177276912949-7foc5tlhd1rd7iltj3a7qru6jf0vesog.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA5jylAXYcah2fcB2vFZbMzmgrlRkRduNo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "177276912949-7foc5tlhd1rd7iltj3a7qru6jf0vesog.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

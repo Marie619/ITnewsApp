@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#1976d2</color>
+    <color name="colorPrimaryDark">#004ba0</color>
+    <color name="colorAccent">#FF9800</color>
+    <color name="screen_background_color">#f5f5f5</color>
+    <color name="white">#fff</color>
+    <color name="color_camera">#999191</color>
+    <color name="color_image_gallery">#C2BBBB</color>
+
+    <color name="iconLikeColor">#3362A6</color>
+    <color name="black">#000</color>
+    <color name="screen_background">#f5f5f5</color>
+
+    <!--colors for profile-->
+    <color name="profilePrimaryDark">#FF3B30</color>
+    <color name="profileAccentColor">#F7F7F7</color>
+    <color name="whiteTextColor">#fff</color>
+    <color name="profileBackground">#fff</color>
+    <color name="blackTextColor">#000</color>
+    <color name="profileEditTextColor">#707070</color>
+
+</resources>

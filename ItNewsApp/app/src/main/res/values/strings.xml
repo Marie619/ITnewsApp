@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">ItNewsApp</string>
+    <string name="title_activity_dashboard">DashboardActivity</string>
+    <string name="title_news">News Feed</string>
+    <string name="title_book">Books</string>
+    <string name="title_favourites">Favourites</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_news_feed">News Feed</string>
+</resources>
