@@ -5,15 +5,15 @@
     <item
         android:id="@+id/menu_profile"
         android:title="My profile"
-        android:icon="@drawable/ic_assessment_black_24dp"
-        app:showAsAction="collapseActionView"
+        android:icon="@drawable/ic_account_circle_black_24dp"
+        app:showAsAction="ifRoom"
         />
 
     <item
         android:id="@+id/menu_logout"
         android:title="Logout"
-        app:showAsAction="collapseActionView"
-        android:icon="@drawable/ic_book_black_24dp"
+        app:showAsAction="ifRoom"
+        android:icon="@drawable/ic_power_settings_new_black_24dp"
         />
 
 

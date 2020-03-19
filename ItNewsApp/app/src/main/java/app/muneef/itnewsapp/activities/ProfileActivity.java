@@ -14,6 +14,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -55,6 +56,7 @@ public class ProfileActivity extends AppCompatActivity {
         databaseReference = FirebaseDatabase.getInstance().getReference().child("Users");
         mUsersProfilePicsStorageRef = FirebaseStorage.getInstance().getReference().child("User");
 
+        getUserInfo();
 
         imgProfile.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -66,7 +68,8 @@ public class ProfileActivity extends AppCompatActivity {
             }
         });
 
-         getUserInfo();
+
+        getUserInfo();
 
 
     }
@@ -87,7 +90,9 @@ public class ProfileActivity extends AppCompatActivity {
                 txtGenderValue.setText(users.getGender());
                 txtEmailValue.setText(users.getUserEmail());
 
-                Glide.with(getApplicationContext()).load(users.getProfileImageUrl()).into(imgProfile);
+                Glide.with(getApplicationContext()).load(users.getProfileImageUrl()).
+                        diskCacheStrategy(DiskCacheStrategy.NONE).skipMemoryCache(true)
+                        .into(imgProfile);
 
 
             }
@@ -118,8 +123,8 @@ public class ProfileActivity extends AppCompatActivity {
                         @Override
                         public void onSuccess(Uri uri) {
                             String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
-                        Users users = new Users();
-                        users.setProfileImageUrl(uri.toString());
+//                        Users users = new Users();
+//                        users.setProfileImageUrl(uri.toString());
                             databaseReference.child(uid).child("profileImgUrl").setValue(uri.toString()).addOnSuccessListener(new OnSuccessListener<Void>() {
                                 @Override
                                 public void onSuccess(Void aVoid) {

@@ -2,23 +2,27 @@ package app.muneef.itnewsapp.models;
 
 import java.util.HashMap;
 
-public class Posts {
+public class News {
 
     private String postId;
     private String postImage;
     private String postText;
     private int totalLikes;
     private HashMap<String, String> likedBy;
+    private String posterId;
 
-    public Posts() {
+
+    public News() {
     }
 
-    public Posts(String postId, String postImage, String postText, int totalLikes, HashMap<String, String> likedBy) {
+    public News(String postId, String postImage, String postText, int totalLikes, HashMap<String,
+            String> likedBy, String posterId) {
         this.postId = postId;
         this.postImage = postImage;
         this.postText = postText;
         this.totalLikes = totalLikes;
         this.likedBy = likedBy;
+        this.posterId = posterId;
     }
 
     public String getPostId() {
@@ -59,5 +63,13 @@ public class Posts {
 
     public void setLikedBy(HashMap<String, String> likedBy) {
         this.likedBy = likedBy;
+    }
+
+    public String getPosterId() {
+        return posterId;
+    }
+
+    public void setPosterId(String posterId) {
+        this.posterId = posterId;
     }
 }

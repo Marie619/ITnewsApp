@@ -18,6 +18,7 @@ import androidx.fragment.app.FragmentActivity;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 
 import app.muneef.itnewsapp.R;
 import app.muneef.itnewsapp.fragments.BooksListFragment;
@@ -30,7 +31,6 @@ public class DashboardActivity extends AppCompatActivity {
 
     FirebaseAuth auth;
     PreferenceManager preferenceManager;
-    FloatingActionButton floatingAction;
     FirebaseDatabase firebaseDatabase;
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
@@ -66,7 +66,6 @@ public class DashboardActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dashboard);
         BottomNavigationView navView = findViewById(R.id.nav_view);
-        floatingAction = findViewById(R.id.floatingAction);
         auth = FirebaseAuth.getInstance();
         firebaseDatabase  = FirebaseDatabase.getInstance();
 
@@ -78,6 +77,8 @@ public class DashboardActivity extends AppCompatActivity {
 
         preferenceManager = new PreferenceManager(this);
         navView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+
+
     }
 
     @Override
@@ -137,7 +138,7 @@ public class DashboardActivity extends AppCompatActivity {
 
         fragmentActivity.getSupportFragmentManager()
                 .beginTransaction()
-                .replace(R.id.container,fragment)
+                .replace(R.id.main_container,fragment)
                 .commit();
 
     }
