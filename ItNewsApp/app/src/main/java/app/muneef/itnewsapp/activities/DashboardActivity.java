@@ -42,12 +42,12 @@ public class DashboardActivity extends AppCompatActivity {
                 case R.id.navigation_home:
                     NewsFragment newsFragment = new NewsFragment();
                     getSupportActionBar().setTitle("News Feed");
-                    loadFragment(DashboardActivity.this,newsFragment);
+                    loadFragment(DashboardActivity.this, newsFragment);
                     return true;
                 case R.id.navigation_books:
                     BooksListFragment booksListFragment = new BooksListFragment();
                     getSupportActionBar().setTitle("Books");
-                    loadFragment(DashboardActivity.this,booksListFragment);
+                    loadFragment(DashboardActivity.this, booksListFragment);
 
                     return true;
 //                case R.id.navigation_favourites:
@@ -67,13 +67,24 @@ public class DashboardActivity extends AppCompatActivity {
         setContentView(R.layout.activity_dashboard);
         BottomNavigationView navView = findViewById(R.id.nav_view);
         auth = FirebaseAuth.getInstance();
-        firebaseDatabase  = FirebaseDatabase.getInstance();
+        firebaseDatabase = FirebaseDatabase.getInstance();
 
 
 
-        NewsFragment newsFragment = new NewsFragment();
-        getSupportActionBar().setTitle("News Feed");
-        loadFragment(DashboardActivity.this,newsFragment);
+        int id = navView.getSelectedItemId();
+
+        if (id == R.id.navigation_home) {
+
+            NewsFragment newsFragment = new NewsFragment();
+            getSupportActionBar().setTitle("News Feed");
+            loadFragment(DashboardActivity.this, newsFragment);
+        } else {
+
+            BooksListFragment booksListFragment = new BooksListFragment();
+            getSupportActionBar().setTitle("Books");
+            loadFragment(DashboardActivity.this, booksListFragment);
+        }
+
 
         preferenceManager = new PreferenceManager(this);
         navView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
@@ -134,17 +145,12 @@ public class DashboardActivity extends AppCompatActivity {
         }).show();
     }
 
-    private void loadFragment(FragmentActivity fragmentActivity, Fragment fragment){
+    private void loadFragment(FragmentActivity fragmentActivity, Fragment fragment) {
 
         fragmentActivity.getSupportFragmentManager()
                 .beginTransaction()
-                .replace(R.id.main_container,fragment)
+                .replace(R.id.main_container, fragment)
                 .commit();
-
-    }
-
-    private void hideButtonFunction(){
-
 
     }
 

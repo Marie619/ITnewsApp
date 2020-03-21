@@ -90,9 +90,8 @@ public class ProfileActivity extends AppCompatActivity {
                 txtGenderValue.setText(users.getGender());
                 txtEmailValue.setText(users.getUserEmail());
 
-                Glide.with(getApplicationContext()).load(users.getProfileImageUrl()).
-                        diskCacheStrategy(DiskCacheStrategy.NONE).skipMemoryCache(true)
-                        .into(imgProfile);
+                Glide.with(imgProfile.getContext()).load(users.getProfileImageUrl()).
+                        into(imgProfile);
 
 
             }

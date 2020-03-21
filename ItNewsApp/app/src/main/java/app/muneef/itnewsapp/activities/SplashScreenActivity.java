@@ -1,11 +1,11 @@
-package app.muneef.itnewsapp;
+package app.muneef.itnewsapp.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
 
-import app.muneef.itnewsapp.activities.LoginActivity;
+import app.muneef.itnewsapp.R;
 
 public class SplashScreenActivity extends AppCompatActivity {
 
