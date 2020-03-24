@@ -89,9 +89,12 @@ public class ProfileActivity extends AppCompatActivity {
                 txtUsername.setText(users.getUserName());
                 txtGenderValue.setText(users.getGender());
                 txtEmailValue.setText(users.getUserEmail());
-
+                if (users.getProfileImageUrl()!=null){
                 Glide.with(imgProfile.getContext()).load(users.getProfileImageUrl()).
                         into(imgProfile);
+                }else {
+                    Toast.makeText(ProfileActivity.this, "Img is null", Toast.LENGTH_SHORT).show();
+                }
 
 
             }
@@ -124,7 +127,7 @@ public class ProfileActivity extends AppCompatActivity {
                             String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
 //                        Users users = new Users();
 //                        users.setProfileImageUrl(uri.toString());
-                            databaseReference.child(uid).child("profileImgUrl").setValue(uri.toString()).addOnSuccessListener(new OnSuccessListener<Void>() {
+                            databaseReference.child(uid).child("profileImageUrl").setValue(uri.toString()).addOnSuccessListener(new OnSuccessListener<Void>() {
                                 @Override
                                 public void onSuccess(Void aVoid) {
 
