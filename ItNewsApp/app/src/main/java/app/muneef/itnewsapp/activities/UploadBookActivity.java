@@ -136,8 +136,15 @@ public class UploadBookActivity extends AppCompatActivity {
                         progressbar.setVisibility(View.GONE);
                         textViewStatus.setText("File Uploaded Successfully");
 
-                        Books book = new Books(editTextFileName.getText().toString(), sRef.getDownloadUrl().toString());
-                        databaseReference.child(databaseReference.push().getKey()).setValue(book);
+                        sRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                            @Override
+                            public void onSuccess(Uri uri) {
+                                Books book = new Books(editTextFileName.getText().toString(), uri.toString());
+                                databaseReference.child(databaseReference.push().getKey()).setValue(book);
+                            }
+                        });
+
+
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
