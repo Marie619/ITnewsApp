@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
@@ -24,6 +25,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import app.muneef.itnewsapp.R;
+import app.muneef.itnewsapp.activities.BookViewActivity;
 import app.muneef.itnewsapp.activities.UploadBookActivity;
 import app.muneef.itnewsapp.models.Books;
 
@@ -91,6 +93,16 @@ public class BooksListFragment extends Fragment {
                 //displaying it to list
                 ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_list_item_1, uploads);
                 listView.setAdapter(adapter);
+
+                listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                    Books book = uploadListOfBooks.get(i);
+                    Intent intent = new Intent(getContext(), BookViewActivity.class);
+                    intent.putExtra("BOOK",book);
+                    startActivity(intent);
+                    }
+                });
 
 
             }

@@ -1,6 +1,8 @@
 package app.muneef.itnewsapp.models;
 
-public class Books {
+import java.io.Serializable;
+
+public class Books implements Serializable {
 
     private String bookName;
     private String bookUrl;
