@@ -37,6 +37,7 @@
         <activity
             android:name=".activities.SignUpActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+        <activity android:name=".activities.UploadBookActivity$Booklist" />
     </application>
 
 </manifest>
