@@ -66,6 +66,7 @@ public class UploadBookActivity extends AppCompatActivity {
 
         databaseReference = FirebaseDatabase.getInstance().getReference().child("Books");
         storageReference = FirebaseStorage.getInstance().getReference();
+        final BooksListFragment booksListFragment = new BooksListFragment();
 
         //Requesting the storage permissions
         requestPermission();
@@ -83,7 +84,9 @@ public class UploadBookActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                startActivity(new Intent(UploadBookActivity.this, Booklist.class));
+//                startActivity(new Intent(UploadBookActivity.this, Booklist.class));
+             //   loadFragment(UploadBookActivity.this,booksListFragment);
+                finish();
             }
         });
 
@@ -223,18 +226,18 @@ public class UploadBookActivity extends AppCompatActivity {
 
     }
 
-    public class Booklist extends DashboardActivity{
-
-
-        @Override
-        protected void onCreate(Bundle savedInstanceState) {
-            super.onCreate(savedInstanceState);
-            setContentView(R.layout.activity_dashboard);
-            if (savedInstanceState == null){
-                getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.main_container, new BooksListFragment ()).commit();}
-        }
-    }
+//    public class Booklist extends DashboardActivity{
+//
+//
+//        @Override
+//        protected void onCreate(Bundle savedInstanceState) {
+//            super.onCreate(savedInstanceState);
+//            setContentView(R.layout.activity_dashboard);
+//            if (savedInstanceState == null){
+//                getSupportFragmentManager().beginTransaction()
+//                        .replace(R.id.main_container, new BooksListFragment ()).commit();}
+//        }
+//    }
 
 }
 

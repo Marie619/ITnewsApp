@@ -34,6 +34,7 @@ public class BookViewActivity extends AppCompatActivity  implements DownloadFile
         webview.loadUrl("http://drive.google.com/viewerng/viewer?embedded=true&url=" + pdf);
 
 
+
     }
 
     @Override
