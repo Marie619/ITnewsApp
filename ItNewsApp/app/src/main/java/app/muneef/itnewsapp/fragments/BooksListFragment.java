@@ -109,47 +109,8 @@ public class BooksListFragment extends Fragment {
                 booksListAdapter.notifyDataSetChanged();
 
 
-//                 uploads = new String[uploadListOfBooks.size()];
-//
-//                for (int i = 0; i < uploads.length; i++) {
-//                    uploads[i] = uploadListOfBooks.get(i).getBookName();
-//                }
 
 
-
-                //displaying it to list
-             //   ArrayAdapter<String> adapter = new ArrayAdapter<String>(,android.R.layout.simple_list_item_1, uploads);
-              //  listView.setAdapter(adapter);
-
-
-                listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                    Books book = uploadListOfBooks.get(i);
-                    Intent intent = new Intent(getContext(), BookViewActivity.class);
-                    intent.putExtra("BOOK",book);
-                    startActivity(intent);
-                    }
-                });
-
-                listView.setOnLongClickListener(new View.OnLongClickListener() {
-                    @Override
-                    public boolean onLongClick(View v) {
-                        mDatabaseBookReference.child(firebaseAuth.getCurrentUser().getUid())
-                                .addValueEventListener(new ValueEventListener() {
-                                    @Override
-                                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                                        dataSnapshot.getRef().removeValue();
-                                    }
-
-                                    @Override
-                                    public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                                    }
-                                });
-                        return true;
-                    }
-                });
 
 
             }

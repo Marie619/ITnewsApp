@@ -13,8 +13,17 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.tonyodev.fetch2.Fetch;
+import com.tonyodev.fetch2.FetchConfiguration;
+import com.tonyodev.fetch2.NetworkType;
+import com.tonyodev.fetch2.Priority;
+import com.tonyodev.fetch2.Request;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,11 +37,19 @@ public class BooksListAdapter extends RecyclerView.Adapter<BooksListAdapter.Book
     ArrayList<Books> booksArrayList;
 
     private DatabaseReference mBookDbRef;
+    FirebaseAuth firebaseAuth;
+    Fetch fetch;
 
     public BooksListAdapter(Context context, ArrayList<Books> booksArrayList) {
         this.context = context;
         this.booksArrayList = booksArrayList;
         mBookDbRef = FirebaseDatabase.getInstance().getReference().child("Books");
+        firebaseAuth = FirebaseAuth.getInstance();
+        FetchConfiguration fetchConfiguration = new FetchConfiguration.Builder(context)
+                .setDownloadConcurrentLimit(3)
+                .build();
+
+        fetch = Fetch.Impl.getInstance(fetchConfiguration);
     }
 
     @NonNull
@@ -44,9 +61,9 @@ public class BooksListAdapter extends RecyclerView.Adapter<BooksListAdapter.Book
     }
 
     @Override
-    public void onBindViewHolder(@NonNull BooksViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull final BooksViewHolder holder, int position) {
 
-        Books books = booksArrayList.get(position);
+        final Books books = booksArrayList.get(position);
 
         holder.txtBookName.setText(books.getBookName());
 
@@ -54,10 +71,31 @@ public class BooksListAdapter extends RecyclerView.Adapter<BooksListAdapter.Book
             @Override
             public boolean onLongClick(View v) {
 
-                Toast.makeText(context, "Long clicked", Toast.LENGTH_SHORT).show();
+                mBookDbRef.child(firebaseAuth.getCurrentUser().getUid())
+                        .addValueEventListener(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                dataSnapshot.getRef().removeValue();
+                                Toast.makeText(context, "removed", Toast.LENGTH_SHORT).show();
+                            }
 
-                return false;
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                            }
+                        });
+                return true;
             }
+        });
+
+        holder.itemView.setOnClickListener(v -> {
+            String name = books.getBookName();
+            String url = books.getBookUrl();
+            Toast.makeText(context,url, Toast.LENGTH_LONG).show();
+
+            downloadPdf(name,url);
+
+
         });
 
 
@@ -79,6 +117,24 @@ public class BooksListAdapter extends RecyclerView.Adapter<BooksListAdapter.Book
 
 
         }
+    }
+
+    private void downloadPdf(String fileName,String fileUrl){
+
+        String file = "/downloads/"+fileName;
+
+        final Request request = new Request(fileUrl, file);
+        request.setPriority(Priority.HIGH);
+        request.setNetworkType(NetworkType.ALL);
+       // request.addHeader("clientKey", "SD78DF93_3947&MVNGHE1WONG");
+
+        fetch.enqueue(request, updatedRequest -> {
+            //Request was successfully enqueued for download.
+            Toast.makeText(context, "Downloading", Toast.LENGTH_SHORT).show();
+        }, error -> {
+            //An error occurred enqueuing the request.
+            Toast.makeText(context, "error occured"+error.toString(), Toast.LENGTH_SHORT).show();
+        });
     }
 
 

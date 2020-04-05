@@ -85,7 +85,7 @@ public class UploadBookActivity extends AppCompatActivity {
             public void onClick(View v) {
 
 //                startActivity(new Intent(UploadBookActivity.this, Booklist.class));
-             //   loadFragment(UploadBookActivity.this,booksListFragment);
+            // loadFragment(UploadBookActivity.this,booksListFragment);
                 finish();
             }
         });
