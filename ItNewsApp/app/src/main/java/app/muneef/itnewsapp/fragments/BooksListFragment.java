@@ -16,6 +16,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -42,9 +43,10 @@ import app.muneef.itnewsapp.models.Books;
  */
 public class BooksListFragment extends Fragment {
 
-    ListView listView;
     FloatingActionButton floatingAction_books;
     RecyclerView rvBooks;
+    ProgressBar pbBook;
+
 
     //database reference to get uploads data
     DatabaseReference mDatabaseBookReference;
@@ -52,9 +54,9 @@ public class BooksListFragment extends Fragment {
 
     //list to store uploads data
     ArrayList<Books> uploadListOfBooks;
-   // String[] uploads;
+    // String[] uploads;
 
-    BooksListAdapter booksListAdapter ;
+    BooksListAdapter booksListAdapter;
 
 
     public BooksListFragment() {
@@ -69,6 +71,9 @@ public class BooksListFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_books_list, container, false);
         rvBooks = view.findViewById(R.id.rvBooks);
         floatingAction_books = view.findViewById(R.id.floatingAction_books);
+        pbBook = view.findViewById(R.id.pbBook);
+
+        pbBook.setVisibility(View.VISIBLE);
 
         uploadListOfBooks = new ArrayList<>();
 
@@ -77,10 +82,9 @@ public class BooksListFragment extends Fragment {
 
         //Data fetching from the firebase database
         fillData();
-        booksListAdapter = new BooksListAdapter(getActivity(),uploadListOfBooks);
+        booksListAdapter = new BooksListAdapter(getActivity(), uploadListOfBooks);
         rvBooks.setLayoutManager(new LinearLayoutManager(getContext()));
         rvBooks.setAdapter(booksListAdapter);
-
 
 
         floatingAction_books.setOnClickListener(new View.OnClickListener() {
@@ -99,18 +103,18 @@ public class BooksListFragment extends Fragment {
         mDatabaseBookReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                uploadListOfBooks.clear();
+                booksListAdapter.notifyDataSetChanged();
+                pbBook.setVisibility(View.GONE);
                 for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
                     Books books = postSnapshot.getValue(Books.class);
                     uploadListOfBooks.add(books);
                 }
 
-                booksListAdapter = new BooksListAdapter(getContext(),uploadListOfBooks);
+                booksListAdapter = new BooksListAdapter(getContext(), uploadListOfBooks);
                 rvBooks.setAdapter(booksListAdapter);
                 booksListAdapter.notifyDataSetChanged();
-
-
-
-
 
 
             }
@@ -125,8 +129,6 @@ public class BooksListFragment extends Fragment {
 
 
     }
-
-
 
 
 }

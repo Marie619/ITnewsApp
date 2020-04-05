@@ -14,7 +14,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activities.BookViewActivity"></activity>
+        <activity android:name=".activities.BookViewActivity"
+
+            >
+
+        </activity>
         <activity android:name=".activities.UploadBookActivity" />
         <activity
             android:name=".activities.SplashScreenActivity"
@@ -39,7 +43,7 @@
         <activity
             android:name=".activities.SignUpActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
-        <activity android:name=".activities.UploadBookActivity$Booklist" />
+
     </application>
 
 </manifest>

@@ -1,6 +1,7 @@
 package app.muneef.itnewsapp.adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.text.Layout;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -29,6 +30,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import app.muneef.itnewsapp.R;
+import app.muneef.itnewsapp.activities.BookViewActivity;
 import app.muneef.itnewsapp.models.Books;
 
 public class BooksListAdapter extends RecyclerView.Adapter<BooksListAdapter.BooksViewHolder> {
@@ -40,16 +42,13 @@ public class BooksListAdapter extends RecyclerView.Adapter<BooksListAdapter.Book
     FirebaseAuth firebaseAuth;
     Fetch fetch;
 
+
     public BooksListAdapter(Context context, ArrayList<Books> booksArrayList) {
         this.context = context;
         this.booksArrayList = booksArrayList;
         mBookDbRef = FirebaseDatabase.getInstance().getReference().child("Books");
         firebaseAuth = FirebaseAuth.getInstance();
-        FetchConfiguration fetchConfiguration = new FetchConfiguration.Builder(context)
-                .setDownloadConcurrentLimit(3)
-                .build();
 
-        fetch = Fetch.Impl.getInstance(fetchConfiguration);
     }
 
     @NonNull
@@ -89,11 +88,16 @@ public class BooksListAdapter extends RecyclerView.Adapter<BooksListAdapter.Book
         });
 
         holder.itemView.setOnClickListener(v -> {
-            String name = books.getBookName();
-            String url = books.getBookUrl();
-            Toast.makeText(context,url, Toast.LENGTH_LONG).show();
 
-            downloadPdf(name,url);
+          String url = books.getBookUrl();
+
+            Intent intent = new Intent(context, BookViewActivity.class);
+            intent.putExtra("book_url",url);
+            context.startActivity(intent);
+
+
+
+
 
 
         });
@@ -119,23 +123,7 @@ public class BooksListAdapter extends RecyclerView.Adapter<BooksListAdapter.Book
         }
     }
 
-    private void downloadPdf(String fileName,String fileUrl){
 
-        String file = "/downloads/"+fileName;
-
-        final Request request = new Request(fileUrl, file);
-        request.setPriority(Priority.HIGH);
-        request.setNetworkType(NetworkType.ALL);
-       // request.addHeader("clientKey", "SD78DF93_3947&MVNGHE1WONG");
-
-        fetch.enqueue(request, updatedRequest -> {
-            //Request was successfully enqueued for download.
-            Toast.makeText(context, "Downloading", Toast.LENGTH_SHORT).show();
-        }, error -> {
-            //An error occurred enqueuing the request.
-            Toast.makeText(context, "error occured"+error.toString(), Toast.LENGTH_SHORT).show();
-        });
-    }
 
 
 }

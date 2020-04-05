@@ -3,12 +3,17 @@ package app.muneef.itnewsapp.activities;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -42,6 +47,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class WriteNewsActivity extends AppCompatActivity {
 
+    private static final int MY_PERMISSIONS_REQUEST_WRITE_EXTERNAL = 34;
     CircleImageView img_user_profile;
     TextView txt_user_profile;
     ImageView img_write_status;
@@ -70,6 +76,8 @@ public class WriteNewsActivity extends AppCompatActivity {
         mStatusDbRef = FirebaseDatabase.getInstance().getReference().child("News");
         mUsersDbRef = FirebaseDatabase.getInstance().getReference().child("Users");
         mStatusStorageRef = FirebaseStorage.getInstance().getReference().child("NewsPics");
+
+        requestPermission();
 
         getCurrentUserListener = new ValueEventListener() {
             @Override
@@ -165,7 +173,8 @@ public class WriteNewsActivity extends AppCompatActivity {
             } else {
                 mStatusDbRef.child(pId).setValue(news);
                 pbStatusUpload.setVisibility(View.INVISIBLE);
-                startActivity(new Intent(WriteNewsActivity.this,DashboardActivity.class));
+                finish();
+                //  startActivity(new Intent(WriteNewsActivity.this,DashboardActivity.class));
 //                NewsFragment newsFragment = new NewsFragment();
 //               // loadFragment(WriteNewsActivity.this,DashboardActivity.class);
             }
@@ -188,11 +197,58 @@ public class WriteNewsActivity extends AppCompatActivity {
 
     }
 
-    private void loadFragment(FragmentActivity fragmentActivity , Fragment fragment){
+    private void loadFragment(FragmentActivity fragmentActivity, Fragment fragment) {
 
         fragmentActivity.getSupportFragmentManager()
                 .beginTransaction()
-                .replace(R.id.main_container,fragment)
+                .replace(R.id.main_container, fragment)
                 .commit();
+    }
+
+    private void requestPermission() {
+
+        if (ContextCompat.checkSelfPermission(WriteNewsActivity.this,
+                Manifest.permission.READ_EXTERNAL_STORAGE)
+                != PackageManager.PERMISSION_GRANTED) {
+
+            // Permission is not granted
+            // Should we show an explanation?
+            if (ActivityCompat.shouldShowRequestPermissionRationale(WriteNewsActivity.this,
+                    Manifest.permission.READ_EXTERNAL_STORAGE)) {
+                // Show an explanation to the user *asynchronously* -- don't block
+                // this thread waiting for the user's response! After the user
+                // sees the explanation, try again to request the permission.
+            } else {
+                // No explanation needed; request the permission
+                ActivityCompat.requestPermissions(WriteNewsActivity.this,
+                        new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
+                        MY_PERMISSIONS_REQUEST_WRITE_EXTERNAL);
+
+                // MY_PERMISSIONS_REQUEST_READ_CONTACTS is an
+                // app-defined int constant. The callback method gets the
+                // result of the request.
+            }
+        } else {
+            // Permission has already been granted
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+
+        switch (requestCode) {
+            case MY_PERMISSIONS_REQUEST_WRITE_EXTERNAL: {
+                // If request is cancelled, the result arrays are empty.
+                if (grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    // permission was granted, yay! Do the
+                    // contacts-related task you need to do.
+                } else {
+                    // permission denied, boo! Disable the
+                    // functionality that depends on this permission.
+                }
+                return;
+            }
+        }
     }
 }

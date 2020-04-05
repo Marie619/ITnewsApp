@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.database.ChildEventListener;
@@ -43,6 +44,7 @@ public class NewsFragment extends Fragment {
     DatabaseReference mNewsDbRef;
     ChildEventListener mNewsListener;
     ValueEventListener mNewsValuesListener;
+    ProgressBar progressBar_news;
 
 
     public NewsFragment() {
@@ -56,9 +58,10 @@ public class NewsFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_news, container, false);
         floatingAction_news = view.findViewById(R.id.floatingAction_news);
+        progressBar_news = view.findViewById(R.id.progressBar_news);
 
         RvNews = view.findViewById(R.id.RvNews);
-
+        progressBar_news.setVisibility(View.VISIBLE);
         mNewsDbRef = FirebaseDatabase.getInstance().getReference().child("News");
 
         RvNews.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -74,7 +77,7 @@ public class NewsFragment extends Fragment {
 
                 newsList.clear();
                 newsApapter.notifyDataSetChanged();
-
+                progressBar_news.setVisibility(View.GONE);
 
                 for (DataSnapshot valueRes : dataSnapshot.getChildren()) {
                     News news = valueRes.getValue(News.class);
